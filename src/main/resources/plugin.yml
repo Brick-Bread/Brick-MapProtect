@@ -1,0 +1,18 @@
+name: Brick-MapProtect
+version: 1.2.0
+main: com.brick.mapprotect.MapProtectPlugin
+api-version: '1.21'
+author: GENRUSH
+description: Protects original blocks of selected maps from non-opped players; configurable block placing.
+commands:
+  mapprotect:
+    description: Manage Brick-MapProtect.
+    usage: /mapprotect reload
+    permission: mapprotect.admin
+permissions:
+  mapprotect.bypass:
+    description: Allows breaking/placing any block, including original map blocks.
+    default: op
+  mapprotect.admin:
+    description: Allows use of /mapprotect commands (e.g. reload).
+    default: op

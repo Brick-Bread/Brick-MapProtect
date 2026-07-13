@@ -1,0 +1,47 @@
+# ============================================================
+#  Brick-MapProtect  —  configuration
+# ============================================================
+#
+#  Protects the ORIGINAL blocks of your maps from being broken
+#  by regular (non-opped) players. Players can still break
+#  blocks that players have placed. Ops can break anything.
+#
+#  After editing this file, run:  /mapprotect reload
+# ------------------------------------------------------------
+
+
+# Which maps (worlds) should be protected?
+#   - List the exact world folder names, one per line.
+#   - Use a single "*" to protect EVERY world on the server.
+#   - Worlds NOT listed here are left completely untouched
+#     (players can break and place freely in them).
+protected-worlds:
+  - world
+  - world_nether
+  - world_the_end
+
+
+# Are regular players allowed to place blocks on protected maps?
+#   true  = players can place blocks (and later break their own).
+#   false = players cannot place any blocks on protected maps.
+#           (Ops can always place, regardless of this setting.)
+allow-placing: true
+
+
+# Stop flowing water & lava from washing away / destroying the
+# original map blocks (torches, redstone, plants, etc.).
+# Liquids can still flow through open space, so ops can build normally.
+protect-from-liquids: true
+
+# Stop fire and lava from BURNING original map blocks.
+# (Player-placed blocks can still catch fire.)
+protect-from-fire: true
+
+
+# ---- Messages (supports & colour codes) --------------------
+
+# Shown when a player tries to break an original map block.
+deny-break-message: "&cYou must be opped to break blocks in this map."
+
+# Shown when placing is disabled and a player tries to place a block.
+deny-place-message: "&cBlock placing is disabled on this map."

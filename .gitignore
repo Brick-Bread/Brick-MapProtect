@@ -1,0 +1,19 @@
+# Build output
+target/
+build/
+*.jar
+
+# Downloaded compile-time libraries (fetched by Maven / build script)
+lib/
+
+# IDE / editor
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS cruft
+.DS_Store
+Thumbs.db
