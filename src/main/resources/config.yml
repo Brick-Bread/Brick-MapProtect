@@ -38,6 +38,13 @@ protect-from-liquids: true
 protect-from-fire: true
 
 
+# Wipe the map clean on every restart?
+#   true  = every block players have placed is removed (set to air) when
+#           the server starts, restoring the map to its original state.
+#   false = player-placed blocks are kept across restarts. (default)
+clear-placed-on-restart: false
+
+
 # ---- Messages (supports & colour codes) --------------------
 
 # Shown when a player tries to break an original map block.

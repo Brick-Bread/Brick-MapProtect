@@ -2,6 +2,7 @@ package com.brick.mapprotect;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -51,6 +52,7 @@ public final class MapProtectPlugin extends JavaPlugin implements Listener {
     private boolean allowPlacing = true;
     private boolean protectFromLiquids = true;
     private boolean protectFromFire = true;
+    private boolean clearPlacedOnRestart = false;
     private String denyBreakMessage;
     private String denyPlaceMessage;
 
@@ -60,6 +62,14 @@ public final class MapProtectPlugin extends JavaPlugin implements Listener {
         dataFile = new File(getDataFolder(), "placed-blocks.yml");
         loadSettings();
         loadPlacedBlocks();
+
+        // Optional arena-reset: wipe every player-placed block on startup.
+        if (clearPlacedOnRestart && !placedBlocks.isEmpty()) {
+            int removed = clearPlacedBlocks();
+            getLogger().info("clear-placed-on-restart: removed " + removed
+                    + " player-placed block(s), map restored to original state.");
+        }
+
         getServer().getPluginManager().registerEvents(this, this);
         getLogger().info("Brick-MapProtect enabled — protecting "
                 + (protectAllWorlds ? "all worlds" : protectedWorlds.size() + " map(s)")
@@ -91,6 +101,7 @@ public final class MapProtectPlugin extends JavaPlugin implements Listener {
         allowPlacing = cfg.getBoolean("allow-placing", true);
         protectFromLiquids = cfg.getBoolean("protect-from-liquids", true);
         protectFromFire = cfg.getBoolean("protect-from-fire", true);
+        clearPlacedOnRestart = cfg.getBoolean("clear-placed-on-restart", false);
         denyBreakMessage = cfg.getString("deny-break-message",
                 "&cYou must be opped to break blocks in this map.");
         denyPlaceMessage = cfg.getString("deny-place-message",
@@ -254,6 +265,43 @@ public final class MapProtectPlugin extends JavaPlugin implements Listener {
         } catch (IOException e) {
             getLogger().warning("Failed to save placed-blocks.yml: " + e.getMessage());
         }
+    }
+
+    /**
+     * Removes every tracked player-placed block from the world (sets it to
+     * air), then clears the tracking set and persists the empty state.
+     * Returns the number of blocks removed. Locations whose world isn't
+     * loaded are simply dropped from tracking.
+     */
+    private int clearPlacedBlocks() {
+        int removed = 0;
+        for (String k : placedBlocks) {
+            // key format: "world:x:y:z" — split from the right so world names
+            // containing ':' still parse correctly.
+            int i3 = k.lastIndexOf(':');
+            int i2 = k.lastIndexOf(':', i3 - 1);
+            int i1 = k.lastIndexOf(':', i2 - 1);
+            if (i1 < 0 || i2 < 0 || i3 < 0) {
+                continue;
+            }
+            String worldName = k.substring(0, i1);
+            World world = getServer().getWorld(worldName);
+            if (world == null) {
+                continue;
+            }
+            try {
+                int x = Integer.parseInt(k.substring(i1 + 1, i2));
+                int y = Integer.parseInt(k.substring(i2 + 1, i3));
+                int z = Integer.parseInt(k.substring(i3 + 1));
+                world.getBlockAt(x, y, z).setType(Material.AIR, false);
+                removed++;
+            } catch (NumberFormatException ignored) {
+                // Malformed entry — skip it.
+            }
+        }
+        placedBlocks.clear();
+        savePlacedBlocks();
+        return removed;
     }
 
     // ---- Helpers ----------------------------------------------------------

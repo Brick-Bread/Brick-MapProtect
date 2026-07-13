@@ -4,6 +4,13 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-07-13
+
+### Added
+- **Arena reset** (`clear-placed-on-restart`, default `false`): when enabled,
+  every player-placed block is removed (set to air) on server startup,
+  restoring the map to its original state. Off by default, so builds persist.
+
 ## [1.2.0] - 2026-07-13
 
 ### Added

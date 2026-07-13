@@ -62,6 +62,11 @@ protect-from-liquids: true
 # Stop fire/lava from burning original map blocks
 protect-from-fire: true
 
+# Wipe all player-placed blocks on restart (arena reset)?
+#   true = map is restored to original state each startup
+#   false = player builds persist across restarts (default)
+clear-placed-on-restart: false
+
 # Messages (supports & colour codes)
 deny-break-message: "&cYou must be opped to break blocks in this map."
 deny-place-message: "&cBlock placing is disabled on this map."
@@ -90,7 +95,7 @@ Anything else is part of the original map and is protected.
 
 ```bash
 mvn clean package
-# → target/Brick-MapProtect-1.2.0.jar
+# → target/Brick-MapProtect-1.3.0.jar
 ```
 
 Requires JDK 21 and Maven 3.9+.
