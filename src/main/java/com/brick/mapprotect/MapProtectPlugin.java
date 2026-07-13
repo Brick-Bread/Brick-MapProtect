@@ -1,6 +1,7 @@
 package com.brick.mapprotect;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -103,7 +104,7 @@ public final class MapProtectPlugin extends JavaPlugin implements Listener {
         protectFromFire = cfg.getBoolean("protect-from-fire", true);
         clearPlacedOnRestart = cfg.getBoolean("clear-placed-on-restart", false);
         denyBreakMessage = cfg.getString("deny-break-message",
-                "&cYou must be opped to break blocks in this map.");
+                "&cYou must be in creative mode to break blocks in this map.");
         denyPlaceMessage = cfg.getString("deny-place-message",
                 "&cBlock placing is disabled on this map.");
     }
@@ -114,7 +115,10 @@ public final class MapProtectPlugin extends JavaPlugin implements Listener {
     }
 
     private boolean isExempt(Player player) {
-        return player.isOp() || player.hasPermission("mapprotect.bypass");
+        // Only players in Creative mode (or with an explicit bypass permission)
+        // may break/place original map blocks. Op status alone does NOT count.
+        return player.getGameMode() == GameMode.CREATIVE
+                || player.hasPermission("mapprotect.bypass");
     }
 
     // ---- Event handling ---------------------------------------------------

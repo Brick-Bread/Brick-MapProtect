@@ -2,9 +2,10 @@
 #  Brick-MapProtect  —  configuration
 # ============================================================
 #
-#  Protects the ORIGINAL blocks of your maps from being broken
-#  by regular (non-opped) players. Players can still break
-#  blocks that players have placed. Ops can break anything.
+#  Protects the ORIGINAL blocks of your maps from being broken.
+#  Only players in CREATIVE mode can break original map blocks;
+#  everyone else can still place blocks and break blocks that
+#  players have placed.
 #
 #  After editing this file, run:  /mapprotect reload
 # ------------------------------------------------------------
@@ -48,7 +49,7 @@ clear-placed-on-restart: false
 # ---- Messages (supports & colour codes) --------------------
 
 # Shown when a player tries to break an original map block.
-deny-break-message: "&cYou must be opped to break blocks in this map."
+deny-break-message: "&cYou must be in creative mode to break blocks in this map."
 
 # Shown when placing is disabled and a player tries to place a block.
 deny-place-message: "&cBlock placing is disabled on this map."

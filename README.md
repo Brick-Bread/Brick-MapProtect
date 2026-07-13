@@ -17,15 +17,19 @@
 
 ## ✨ What it does
 
-Regular (non-opped) players can **never break the original blocks of a protected map** —
-but everything they build themselves is fair game. Perfect for minigame lobbies, parkour
-maps, hub worlds, and gen-raiding arenas where the terrain must stay intact.
+Only players in **Creative mode** can break the original blocks of a protected map.
+Everyone in Survival/Adventure can still build, and break anything players have
+placed — but the original terrain stays intact. Perfect for minigame lobbies,
+parkour maps, hub worlds, and gen-raiding arenas.
 
-| Action (on a protected map) | Op / Bypass | Player · `allow-placing: true` | Player · `allow-placing: false` |
-|-----------------------------|:-----------:|:------------------------------:|:-------------------------------:|
+| Action (on a protected map) | Creative mode | Survival · `allow-placing: true` | Survival · `allow-placing: false` |
+|-----------------------------|:-------------:|:--------------------------------:|:---------------------------------:|
 | Break an **original** map block | ✅ | ❌ | ❌ |
 | **Place** a block | ✅ | ✅ | ❌ |
 | Break a **player-placed** block | ✅ | ✅ | ✅ |
+
+> **Note:** breaking original blocks is gated on **game mode, not op status** — an
+> opped player in Survival still can't break the map. Use `/gamemode creative` to edit.
 
 Worlds that aren't in your protected list are left completely untouched.
 
@@ -54,7 +58,7 @@ protected-worlds:
 
 # Can regular players place blocks on protected maps?
 #   true  = players can place (and later break their own blocks)
-#   false = players cannot place any blocks (ops always can)
+#   false = players cannot place any blocks (creative players always can)
 allow-placing: true
 
 # Stop flowing water/lava from destroying original map blocks
@@ -68,7 +72,7 @@ protect-from-fire: true
 clear-placed-on-restart: false
 
 # Messages (supports & colour codes)
-deny-break-message: "&cYou must be opped to break blocks in this map."
+deny-break-message: "&cYou must be in creative mode to break blocks in this map."
 deny-place-message: "&cBlock placing is disabled on this map."
 ```
 
@@ -80,7 +84,7 @@ deny-place-message: "&cBlock placing is disabled on this map."
 
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `mapprotect.bypass` | Break/place anything, including original map blocks | `op` |
+| `mapprotect.bypass` | Explicit override to break/place anything **without** creative mode | `false` |
 | `mapprotect.admin`  | Use `/mapprotect` commands | `op` |
 
 ## 🔧 How it works
@@ -95,7 +99,7 @@ Anything else is part of the original map and is protected.
 
 ```bash
 mvn clean package
-# → target/Brick-MapProtect-1.3.0.jar
+# → target/Brick-MapProtect-1.4.0.jar
 ```
 
 Requires JDK 21 and Maven 3.9+.
