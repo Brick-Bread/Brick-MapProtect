@@ -33,8 +33,10 @@ parkour maps, hub worlds, and gen-raiding arenas.
 
 Worlds that aren't in your protected list are left completely untouched.
 
-**Anti-grief extras** (on by default, configurable): flowing **water & lava** can't
-wash away or destroy original map blocks, and **fire/lava can't burn** them either.
+**Anti-grief extras** (on by default, configurable): original map blocks can't be
+destroyed by flowing **water & lava** (including buckets), **fire**, **explosions**
+(TNT, creepers), **pistons**, or **entity grief** (endermen & co.) — while all of
+those still work normally on player-placed blocks.
 
 ## 🚀 Installation
 
@@ -61,10 +63,17 @@ protected-worlds:
 #   false = players cannot place any blocks (creative players always can)
 allow-placing: true
 
-# Stop flowing water/lava from destroying original map blocks
+# Stop flowing water/lava (and buckets) from destroying original map blocks
 protect-from-liquids: true
 # Stop fire/lava from burning original map blocks
 protect-from-fire: true
+# Stop explosions (TNT, creepers, ...) from destroying original map blocks
+protect-from-explosions: true
+# Stop pistons from pushing/pulling original map blocks out of position
+# (set to false if your map relies on piston contraptions)
+protect-from-pistons: true
+# Stop endermen, silverfish etc. from altering original map blocks
+protect-from-entity-grief: true
 
 # Wipe all player-placed blocks on restart (arena reset)?
 #   true = map is restored to original state each startup

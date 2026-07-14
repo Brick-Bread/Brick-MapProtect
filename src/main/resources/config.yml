@@ -25,18 +25,34 @@ protected-worlds:
 # Are regular players allowed to place blocks on protected maps?
 #   true  = players can place blocks (and later break their own).
 #   false = players cannot place any blocks on protected maps.
-#           (Ops can always place, regardless of this setting.)
+#           (Players in CREATIVE mode can always place, regardless
+#            of this setting. Op status grants no exemption.)
 allow-placing: true
 
 
 # Stop flowing water & lava from washing away / destroying the
 # original map blocks (torches, redstone, plants, etc.).
-# Liquids can still flow through open space, so ops can build normally.
+# Also stops buckets being emptied onto original blocks.
+# Liquids can still flow through open space, so building works normally.
 protect-from-liquids: true
 
 # Stop fire and lava from BURNING original map blocks.
 # (Player-placed blocks can still catch fire.)
 protect-from-fire: true
+
+# Stop explosions (TNT, creepers, beds, ...) from destroying original
+# map blocks. Player-placed blocks still blow up normally.
+protect-from-explosions: true
+
+# Stop pistons from pushing/pulling original map blocks out of position
+# (the classic bypass for break protection). Pistons that move only
+# player-placed blocks still work. Set to false if your map relies on
+# piston contraptions that move original blocks.
+protect-from-pistons: true
+
+# Stop entity griefing: endermen stealing blocks, silverfish burrowing,
+# original sand/gravel being dropped, etc.
+protect-from-entity-grief: true
 
 
 # Wipe the map clean on every restart?

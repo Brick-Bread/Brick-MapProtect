@@ -1,5 +1,5 @@
 name: Brick-MapProtect
-version: 1.4.1
+version: 1.5.0
 main: com.brick.mapprotect.MapProtectPlugin
 api-version: '1.21'
 author: GENRUSH

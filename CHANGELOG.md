@@ -4,6 +4,45 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-07-14
+
+### Added
+- **Explosion protection** (`protect-from-explosions`, default `true`): TNT,
+  creepers, beds etc. no longer destroy original map blocks; player-placed
+  blocks still blow up normally.
+- **Piston protection** (`protect-from-pistons`, default `true`): pistons can
+  no longer push/pull original map blocks out of position — the classic bypass
+  for break protection. Pistons moving only player-placed blocks still work,
+  and the tracking follows the moved blocks.
+- **Entity-grief protection** (`protect-from-entity-grief`, default `true`):
+  endermen, silverfish, falling original sand/gravel etc. can no longer alter
+  original map blocks.
+- **Bucket protection**: emptying a water/lava bucket directly onto an original
+  block (tall grass, torches, waterlogging) is now denied for non-Creative
+  players; buckets also respect `allow-placing: false`.
+- **Autosave**: placed-block data is now saved every 5 minutes (write happens
+  off the main thread), so a crash loses at most one interval instead of the
+  whole session.
+
+### Fixed
+- **Doors, beds and double plants are now fully tracked.** Previously only the
+  clicked half was recorded, so players couldn't break the other half of their
+  own door/bed (multi-block places fire `BlockMultiPlaceEvent`).
+- **Stale tracking entries.** Player-placed blocks destroyed by fire, liquids,
+  explosions or entities are now removed from tracking, instead of leaving
+  entries that grew the data file forever and could mark a future original
+  block at that spot as breakable.
+- Outdated config comment claiming "Ops can always place" — the exemption has
+  been Creative mode (never op status) since 1.4.0.
+
+### Changed
+- **Performance:** placed blocks are stored as packed coordinates per world and
+  world-protection checks are cached, so hot paths (liquid flow fires for every
+  spreading water/lava block) no longer allocate a `"world:x:y:z"` string and a
+  lowercased world name per event. The `placed-blocks.yml` format is unchanged.
+- Startup arena reset (`clear-placed-on-restart`) processes blocks chunk by
+  chunk instead of in random order, so each chunk loads only once.
+
 ## [1.4.1] - 2026-07-14
 
 ### Fixed
