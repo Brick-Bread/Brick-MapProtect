@@ -1,5 +1,5 @@
 name: Brick-MapProtect
-version: 1.4.0
+version: 1.4.1
 main: com.brick.mapprotect.MapProtectPlugin
 api-version: '1.21'
 author: GENRUSH
@@ -10,9 +10,6 @@ commands:
     usage: /mapprotect reload
     permission: mapprotect.admin
 permissions:
-  mapprotect.bypass:
-    description: Explicit override to break/place any block without being in creative mode.
-    default: false
   mapprotect.admin:
     description: Allows use of /mapprotect commands (e.g. reload).
     default: op

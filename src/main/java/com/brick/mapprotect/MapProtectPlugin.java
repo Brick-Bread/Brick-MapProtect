@@ -36,9 +36,10 @@ import java.util.Set;
  *  - protected-worlds : which maps this plugin governs ("*" = all worlds).
  *  - allow-placing    : whether non-opped players may place blocks on those maps.
  *
- * Opped players (or holders of the "mapprotect.bypass" permission) are never
- * restricted. The set of player-placed blocks is persisted to placed-blocks.yml
- * so it survives restarts.
+ * Only players in Creative mode may break original map blocks (or place when
+ * placing is disabled); op status and permissions grant no exemption. The set
+ * of player-placed blocks is persisted to placed-blocks.yml so it survives
+ * restarts.
  */
 public final class MapProtectPlugin extends JavaPlugin implements Listener {
 
@@ -115,10 +116,11 @@ public final class MapProtectPlugin extends JavaPlugin implements Listener {
     }
 
     private boolean isExempt(Player player) {
-        // Only players in Creative mode (or with an explicit bypass permission)
-        // may break/place original map blocks. Op status alone does NOT count.
-        return player.getGameMode() == GameMode.CREATIVE
-                || player.hasPermission("mapprotect.bypass");
+        // Only players in Creative mode may break/place original map blocks.
+        // Op status and permissions do NOT count — many servers grant staff a
+        // wildcard ("*") permission, which would silently let opped players
+        // break protected blocks. Creative mode is the single gate.
+        return player.getGameMode() == GameMode.CREATIVE;
     }
 
     // ---- Event handling ---------------------------------------------------
@@ -162,7 +164,7 @@ public final class MapProtectPlugin extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
         String k = key(block.getLocation());
 
-        // Ops / bypass may break anything, including pre-existing map blocks.
+        // Creative-mode players may break anything, including pre-existing map blocks.
         if (isExempt(player)) {
             placedBlocks.remove(k);
             return;

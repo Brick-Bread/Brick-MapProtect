@@ -4,6 +4,18 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2026-07-14
+
+### Fixed
+- **Opped players could still break original map blocks.** Breaking (and
+  placing when `allow-placing` is false) was also exempted by the
+  `mapprotect.bypass` permission, which staff/ops commonly inherit via a
+  wildcard (`*`) permission. Exemption is now gated **solely** on Creative game
+  mode; op status and permissions grant no override.
+
+### Removed
+- `mapprotect.bypass` permission — Creative mode is the single gate.
+
 ## [1.4.0] - 2026-07-13
 
 ### Changed

@@ -84,8 +84,11 @@ deny-place-message: "&cBlock placing is disabled on this map."
 
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `mapprotect.bypass` | Explicit override to break/place anything **without** creative mode | `false` |
 | `mapprotect.admin`  | Use `/mapprotect` commands | `op` |
+
+> Breaking original map blocks is gated **solely** on Creative game mode.
+> Op status and permissions grant no override — switch to Creative
+> (`/gamemode creative`) to edit protected maps.
 
 ## 🔧 How it works
 
